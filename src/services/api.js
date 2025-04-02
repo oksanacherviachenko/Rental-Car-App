@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://api.themoviedb.org/3';
+const BASE_URL = 'https://car-rental-api.goit.global';
 const API_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5NzQxYjNjZGY2MmRjYmQyOTgzNjU5MmNhNjM5ZGYwYiIsIm5iZiI6MTczMjEzNzg2NC4zMDM5ODM0LCJzdWIiOiI2NzNlNGRhZGFkZTkzMTBmM2ZkZjhhZGYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.N4_rdsIonUz94o2X6ewclT-7n96up5IZkpJMN8HhwpQ';
 
 const axiosInstance = axios.create({
