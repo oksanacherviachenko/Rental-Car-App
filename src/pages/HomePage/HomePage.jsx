@@ -1,39 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { fetchTrendingMovies } from '../../services/api';
-import MovieList from '../../components/MovieList/MovieList';
-import Loader from '../../components/Loader/Loader';
-import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './HomePage.module.css';
 
-function HomePage() {
-  const [movies, setMovies] = useState([]);
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    setIsLoading(true); 
-    fetchTrendingMovies()
-      .then(setMovies) 
-      .catch(err => {
-        console.error('Error fetching trending movies:', err.message);
-        setError('Failed to load trending movies. Please try again later.');
-      })
-      .finally(() => setIsLoading(false)); 
-  }, []);
+const HomePage = () => {
+  const navigate = useNavigate();
 
   return (
-    <div className={styles.container}>
-      {isLoading && <Loader />}
-      {error && <ErrorMessage message={error} />}
-      {!isLoading && !error && (
-        <>
-          <h1>Trending Movies</h1>
-          <MovieList movies={movies} />
-        </>
-      )}
-    </div>
+    <section className={styles.hero}>
+      <div className={styles.content}>
+        <h1 className={styles.title}>Find your perfect rental car</h1>
+        <p className={styles.subtitle}>Reliable and budget-friendly rentals for any journey</p>
+        <button
+          className={styles.ctaButton}
+          onClick={() => navigate('/catalog')}
+        >
+          View Catalog
+        </button>
+      </div>
+    </section>
   );
-}
+};
 
 export default HomePage;
+
 
