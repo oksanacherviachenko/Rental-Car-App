@@ -16,7 +16,7 @@ function Navigation() {
           to="/movies"
           className={({ isActive }) => (isActive ? styles.active : styles.link)}
         >
-          Movies
+          Catalog
         </NavLink>
       </nav>
     </header>

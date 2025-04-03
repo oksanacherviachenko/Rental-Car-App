@@ -1,8 +1,9 @@
+//src/redux/cars/carsSlice.jsx
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchCars, fetchCarById } from './operations';
 
 const initialState = {
-  items: [],
+  items: [], // список машин
   selectedCar: null,
   isLoading: false,
   error: null,
@@ -45,7 +46,14 @@ const carsSlice = createSlice({
       })
       .addCase(fetchCars.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.items = action.payload;
+        // Додано захист: завжди зберігаємо масив
+        if (Array.isArray(action.payload)) {
+          state.items = action.payload;
+        } else if (Array.isArray(action.payload?.results)) {
+          state.items = action.payload.results;
+        } else {
+          state.items = []; // fallback, щоб не було помилки
+        }
       })
       .addCase(fetchCars.rejected, (state, action) => {
         state.isLoading = false;
@@ -65,3 +73,4 @@ export const {
 } = carsSlice.actions;
 
 export default carsSlice.reducer;
+
