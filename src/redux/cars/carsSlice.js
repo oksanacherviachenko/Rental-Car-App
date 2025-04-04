@@ -3,8 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import { fetchCars, fetchCarById } from './operations';
 
 const initialState = {
-  items: [], // список машин
-  selectedCar: null,
+  items: [],                // Список усіх авто
+  selectedCar: null,        // Для деталей окремого авто
   isLoading: false,
   error: null,
   filters: {
@@ -13,7 +13,9 @@ const initialState = {
     mileageFrom: '',
     mileageTo: '',
   },
-  favorites: [],
+  favorites: [],            // Масив ID обраних авто
+  page: 1,                  // Поточна сторінка для пагінації
+  hasMore: true,            // Чи є ще авто для підвантаження
 };
 
 const carsSlice = createSlice({
@@ -37,6 +39,9 @@ const carsSlice = createSlice({
     loadFavoritesFromStorage(state, action) {
       state.favorites = action.payload;
     },
+    setPage(state, action) {
+      state.page = action.payload;
+    },
   },
   extraReducers: builder => {
     builder
@@ -45,22 +50,37 @@ const carsSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchCars.fulfilled, (state, action) => {
-        state.isLoading = false;
-        // Додано захист: завжди зберігаємо масив
-        if (Array.isArray(action.payload)) {
-          state.items = action.payload;
-        } else if (Array.isArray(action.payload?.results)) {
-          state.items = action.payload.results;
-        } else {
-          state.items = []; // fallback, щоб не було помилки
-        }
-      })
+  state.isLoading = false;
+
+  const newItems = action.payload.cars || [];
+
+  // Перевірка: чи є ще машини
+  state.hasMore = newItems.length === 12;
+
+  if (state.page === 1) {
+    state.items = newItems;
+  } else {
+    state.items = [...state.items, ...newItems];
+  }
+
+  console.log('✅ Авто збережено у Redux:', state.items);
+})
       .addCase(fetchCars.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
       })
+      .addCase(fetchCarById.pending, state => {
+        state.isLoading = true;
+        state.error = null;
+        state.selectedCar = null;
+      })
       .addCase(fetchCarById.fulfilled, (state, action) => {
+        state.isLoading = false;
         state.selectedCar = action.payload;
+      })
+      .addCase(fetchCarById.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
       });
   },
 });
@@ -70,7 +90,11 @@ export const {
   resetFilters,
   toggleFavorite,
   loadFavoritesFromStorage,
+  setPage,
 } = carsSlice.actions;
 
 export default carsSlice.reducer;
+
+
+
 

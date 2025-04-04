@@ -1,68 +1,83 @@
+// src/pages/CarDetailsPage/CarDetailsPage.jsx
 import React, { useEffect, useState } from 'react';
-import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
-import { fetchMovieDetails } from '../../services/api';
-import styles from './MovieDetailsPage.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { fetchCarById } from '../../redux/cars/operations';
+import Loader from '../../components/Loader/Loader';
+import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
+import RentalModal from '../../components/RentalModal/RentalModal';
+import styles from './CarDetailsPage.module.css';
 
-function MovieDetailsPage() {
-  const { movieId } = useParams();
-  const location = useLocation();
-  const [movie, setMovie] = useState(null);
-  const backLink = location.state?.from || '/movies';
+const CarDetailsPage = () => {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+
+  const car = useSelector(state => state.cars.selectedCar);
+  const isLoading = useSelector(state => state.cars.isLoading);
+  const error = useSelector(state => state.cars.error);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    fetchMovieDetails(movieId).then(setMovie).catch(console.error);
-  }, [movieId]);
+    dispatch(fetchCarById(id));
+  }, [dispatch, id]);
 
-  if (!movie) return null;
-
-  const {
-    poster_path: posterPath,
-    title,
-    release_date: releaseDate,
-    vote_average: voteAverage,
-    overview,
-    genres,
-  } = movie;
+  if (isLoading) return <Loader />;
+  if (error) return <ErrorMessage message={error} />;
+  if (!car) return null;
 
   return (
     <div className={styles.container}>
-      <Link to={backLink} className={styles.goBackButton}>
-        Go back
-      </Link>
-      <div className={styles.movieDetails}>
-        <img
-          src={`https://image.tmdb.org/t/p/w500${posterPath}`}
-          alt={title}
-          className={styles.poster}
-        />
-        <div className={styles.info}>
-          <h1 className={styles.title}>{title} ({releaseDate?.slice(0, 4)})</h1>
-          <p className={styles.score}>User score: {Math.round(voteAverage * 10)}%</p>
-          <h2>Overview</h2>
-          <p className={styles.overview}>{overview}</p>
-          <h2>Genres</h2>
-          <p className={styles.genres}>
-            {genres?.map(genre => genre.name).join(', ')}
-          </p>
-        </div>
+      <h1>
+        {car.make} {car.model}
+      </h1>
+
+      <img src={car.img} alt={car.make} className={styles.image} />
+
+      <div className={styles.info}>
+        <p>
+          <strong>Year:</strong> {car.year}
+        </p>
+        <p>
+          <strong>Type:</strong> {car.type}
+        </p>
+        <p>
+          <strong>Fuel:</strong> {car.fuelConsumption}
+        </p>
+        <p>
+          <strong>Engine Size:</strong> {car.engineSize}
+        </p>
+        <p>
+          <strong>Rental Price:</strong> {car.rentalPrice}
+        </p>
+        <p>
+          <strong>Address:</strong> {car.address}
+        </p>
+        <p>
+          <strong>Rental Conditions:</strong> {car.rentalConditions}
+        </p>
+        <p>
+          <strong>Mileage:</strong> {Number(car.mileage).toLocaleString()} km
+        </p>
+        <p>
+          <strong>Accessories:</strong> {car.accessories.join(', ')}
+        </p>
+        <p>
+          <strong>Functionalities:</strong> {car.functionalities.join(', ')}
+        </p>
       </div>
-      <hr className={styles.divider} />
-      <div className={styles.additionalInfo}>
-        <h2>Additional information</h2>
-        <ul>
-          <li>
-            <Link to="cast" state={{ from: backLink }}>Cast</Link>
-          </li>
-          <li>
-            <Link to="reviews" state={{ from: backLink }}>Reviews</Link>
-          </li>
-        </ul>
-      </div>
-      <Outlet />
+
+      <button className={styles.button} onClick={() => setIsModalOpen(true)}>
+        Rent this car
+      </button>
+
+      {isModalOpen && (
+        <RentalModal car={car} onClose={() => setIsModalOpen(false)} />
+      )}
     </div>
   );
-}
+};
 
-export default MovieDetailsPage;
+export default CarDetailsPage;
+
 
 
