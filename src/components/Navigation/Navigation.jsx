@@ -1,3 +1,4 @@
+//src/components/Navigation/Navigation.jsx
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from './Navigation.module.css';
@@ -13,7 +14,7 @@ function Navigation() {
           Home
         </NavLink>
         <NavLink
-          to="/movies"
+          to="/catalog"
           className={({ isActive }) => (isActive ? styles.active : styles.link)}
         >
           Catalog
@@ -24,3 +25,4 @@ function Navigation() {
 }
 
 export default Navigation;
+

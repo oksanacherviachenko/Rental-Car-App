@@ -1,3 +1,4 @@
+//src/pages/HomePage/HomePage.jsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './HomePage.module.css';

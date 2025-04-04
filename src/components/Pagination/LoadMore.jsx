@@ -1,3 +1,4 @@
+//src/components/Pagination/LoadMore.jsx
 import React from 'react';
 import styles from './LoadMore.module.css';
 
