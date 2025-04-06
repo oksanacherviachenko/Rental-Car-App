@@ -3,9 +3,8 @@ import React, { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Navigation from './components/Navigation/Navigation';
 import Loader from './components/Loader/Loader';
-import styles from './App.module.css'; // ✅ підключаємо модуль стилів
+import styles from './App.module.css';
 
-// Сторінки RentalCar
 const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
 const CatalogPage = lazy(() => import('./pages/CatalogPage/CatalogPage'));
 const CarDetailsPage = lazy(() => import('./pages/CarDetailsPage/CarDetailsPage'));
@@ -30,6 +29,7 @@ function App() {
 }
 
 export default App;
+
 
 
 

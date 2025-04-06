@@ -1,91 +1,85 @@
 // src/components/RentalModal/RentalModal.jsx
-
+// src/components/RentalModal/RentalModal.jsx
 import React, { useState } from 'react';
 import styles from './RentalModal.module.css';
 
-const RentalModal = ({ onClose, car }) => {
+const RentalModal = () => {
   const [formData, setFormData] = useState({
     name: '',
-    phone: '',
     email: '',
+    date: '',
+    comment: '',
   });
-
-  const [success, setSuccess] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const handleChange = e => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   const handleSubmit = e => {
     e.preventDefault();
 
-    // проста перевірка
-    if (!formData.name || !formData.phone || !formData.email) {
-      alert('Please fill in all fields');
+    if (!formData.name || !formData.email || !formData.date) {
+      alert('Please fill all required fields (*)');
       return;
     }
 
-    // Імітація надсилання форми
+    // емуляція успішної відправки форми
+    setIsSuccess(true);
     setTimeout(() => {
-      setSuccess(true);
-      setTimeout(() => {
-        setSuccess(false);
-        onClose(); // закрити форму
-      }, 2000);
-    }, 1000);
+      setFormData({ name: '', email: '', date: '', comment: '' });
+      setIsSuccess(false);
+    }, 2000);
   };
 
   return (
-    <div className={styles.backdrop}>
-      <div className={styles.modal}>
-        <button className={styles.closeBtn} onClick={onClose}>×</button>
+    <div className={styles.formContainer}>
+      <h3 className={styles.formTitle}>Book your car now</h3>
+      <p className={styles.formText}>Stay connected! We are always ready to help you.</p>
 
-        {success ? (
-          <p className={styles.success}>🎉 Your booking was successful!</p>
-        ) : (
-          <>
-            <h2>Rent {car.make} {car.model}</h2>
-            <form onSubmit={handleSubmit} className={styles.form}>
-              <label>
-                Name:
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                />
-              </label>
-              <label>
-                Phone:
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  required
-                />
-              </label>
-              <label>
-                Email:
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                />
-              </label>
-
-              <button type="submit" className={styles.submitBtn}>
-                Confirm Booking
-              </button>
-            </form>
-          </>
-        )}
-      </div>
+      {isSuccess ? (
+        <p className={styles.success}>🎉 Your booking was successful!</p>
+      ) : (
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <input
+            type="text"
+            name="name"
+            placeholder="Name*"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email*"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="date"
+            name="date"
+            placeholder="Booking date*"
+            value={formData.date}
+            onChange={handleChange}
+            required
+          />
+          <textarea
+            name="comment"
+            placeholder="Comment"
+            value={formData.comment}
+            onChange={handleChange}
+          />
+          <button type="submit">Send</button>
+        </form>
+      )}
     </div>
   );
 };
 
 export default RentalModal;
+
