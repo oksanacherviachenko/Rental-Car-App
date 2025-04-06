@@ -1,4 +1,5 @@
-/*src/components/Navigation/Navigation.module.css*/
+/* src/components/Navigation/Navigation.module.css */
+
 .header {
   background-color: #f2f4f7;
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
@@ -44,18 +45,18 @@
 .link {
   font-size: 16px;
   font-weight: 500;
-  color: var(--main);
+  color: var(--main); /* 🔄 основний колір */
   text-decoration: none;
   transition: color var(--transition-fast);
 }
 
 .link:hover,
 .link:focus {
-  color: var(--button-hover);
+  color: var(--button-hover); /* 🔄 зміна кольору при ховері/фокусі */
 }
 
 .active {
-  color: var(--button-hover);
+  color: var(--button-hover); /* 🔄 активний стан */
 }
 
 .burger {

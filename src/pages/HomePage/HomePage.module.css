@@ -1,10 +1,99 @@
-.container {
-  padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
+/*src/pages/HomePage.module.css*/
+/* src/pages/HomePage/HomePage.module.css */
+
+.hero {
+  background: url("/img/hero-img.png") no-repeat center center/cover;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  text-align: center;
+  padding-bottom: 60px;
 }
 
-h1 {
+.content {
+  width: 783px;
+  height: 207px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font: 700 60px / 120% var(--font-family);
+  color: var(--white);
+  white-space: nowrap;
+  margin-bottom: 0;
+}
+
+.subtitle {
+  font: 600 24px / 133% var(--font-family);
+  color: var(--white);
+  white-space: nowrap;
+  margin-bottom: 0;
+}
+
+.ctaButton {
+  border-radius: 12px;
+  padding: 12px 99px;
+  width: 276px;
+  height: 44px;
+  background: var(--button);
+  color: var(--white);
+  font: 600 16px / 1 var(--font-family);
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  white-space: nowrap;
   text-align: center;
-  margin-bottom: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* Hover/focus state */
+.ctaButton:hover,
+.ctaButton:focus {
+  background-color: var(--button-hover);
+}
+
+/* ───── 📱 Mobile & Tablet Responsiveness ───── */
+@media (max-width: 768px) {
+  .content {
+    width: 90%;
+    height: auto;
+    gap: 16px;
+  }
+
+  .title {
+    font-size: 36px;
+    white-space: normal;
+  }
+
+  .subtitle {
+    font-size: 18px;
+    white-space: normal;
+  }
+
+  .ctaButton {
+    width: auto;
+    padding: 12px 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 28px;
+  }
+
+  .subtitle {
+    font-size: 16px;
+  }
+
+  .ctaButton {
+    font-size: 14px;
+    height: 40px;
+  }
 }

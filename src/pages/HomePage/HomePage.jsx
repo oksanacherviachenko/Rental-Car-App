@@ -1,4 +1,4 @@
-//src/pages/HomePage/HomePage.jsx
+// src/pages/HomePage/HomePage.jsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './HomePage.module.css';
@@ -10,7 +10,9 @@ const HomePage = () => {
     <section className={styles.hero}>
       <div className={styles.content}>
         <h1 className={styles.title}>Find your perfect rental car</h1>
-        <p className={styles.subtitle}>Reliable and budget-friendly rentals for any journey</p>
+        <p className={styles.subtitle}>
+          Reliable and budget-friendly rentals for any journey
+        </p>
         <button
           className={styles.ctaButton}
           onClick={() => navigate('/catalog')}
@@ -23,5 +25,6 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
 
 
