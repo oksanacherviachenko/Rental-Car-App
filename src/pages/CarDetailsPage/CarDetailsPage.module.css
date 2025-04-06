@@ -27,8 +27,8 @@
   width: 48%;
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* ✅ вирівнювання по лівому краю */
-  gap: 20px; /* ✅ більший відступ між блоками */
+  align-items: flex-start;
+  gap: 20px;
   padding-top: 8px;
 }
 

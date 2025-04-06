@@ -1,5 +1,4 @@
 // src/components/RentalModal/RentalModal.jsx
-// src/components/RentalModal/RentalModal.jsx
 import React, { useState } from 'react';
 import styles from './RentalModal.module.css';
 
@@ -27,7 +26,6 @@ const RentalModal = () => {
       return;
     }
 
-    // емуляція успішної відправки форми
     setIsSuccess(true);
     setTimeout(() => {
       setFormData({ name: '', email: '', date: '', comment: '' });
@@ -41,7 +39,7 @@ const RentalModal = () => {
       <p className={styles.formText}>Stay connected! We are always ready to help you.</p>
 
       {isSuccess ? (
-        <p className={styles.success}>🎉 Your booking was successful!</p>
+        <p className={styles.success}> Your booking was successful!</p>
       ) : (
         <form onSubmit={handleSubmit} className={styles.form}>
           <input

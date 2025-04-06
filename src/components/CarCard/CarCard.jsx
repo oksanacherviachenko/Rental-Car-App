@@ -16,7 +16,7 @@ const CarCard = ({ car }) => {
     type,
     mileage,
     img,
-    yea: year, // 🛠️ важливо: поле в API називається "yea"
+    yea: year, 
   } = car;
 
   const city = address?.split(', ')[1] || '';
@@ -51,7 +51,7 @@ const CarCard = ({ car }) => {
 
         <Link
           to={`/catalog/${id}`}
-          state={{ car }} // 🧠 передаємо повний обʼєкт авто
+          state={{ car }} 
           className={styles.button}
         >
           Read more

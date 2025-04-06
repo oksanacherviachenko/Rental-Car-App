@@ -48,7 +48,7 @@ const FilterPanel = () => {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
-      <div className={styles.row}> {/* 👈 new wrapper for horizontal alignment */}
+      <div className={styles.row}> 
         <label className={styles.label}>
           Car brand
           <div className={styles.selectWrapper}>

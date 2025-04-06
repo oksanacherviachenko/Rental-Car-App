@@ -1,5 +1,4 @@
 // src/redux/cars/carsSlice.js
-// src/redux/cars/carsSlice.js 
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchCars, fetchCarById } from './operations';
 

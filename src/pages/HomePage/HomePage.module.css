@@ -53,13 +53,12 @@
   margin-top: 20px;
 }
 
-/* Hover/focus state */
 .ctaButton:hover,
 .ctaButton:focus {
   background-color: var(--button-hover);
 }
 
-/* ───── 📱 Mobile & Tablet Responsiveness ───── */
+/* ─────  Mobile & Tablet Responsiveness ───── */
 @media (max-width: 768px) {
   .content {
     width: 90%;

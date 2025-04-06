@@ -1,5 +1,4 @@
 // src/pages/CarDetailsPage/CarDetailsPage.jsx
-// src/pages/CarDetailsPage/CarDetailsPage.jsx
 import React, { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { fetchCarById } from '../../services/api';
@@ -21,7 +20,7 @@ const CarDetailsPage = () => {
 
     const loadCar = async () => {
       try {
-        setError(false); // Скидаємо помилку перед новим запитом
+        setError(false); 
         const data = await fetchCarById(id);
         setCar(data);
       } catch (err) {

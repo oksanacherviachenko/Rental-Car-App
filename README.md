@@ -1,12 +1,60 @@
-# React + Vite
+# RentalCar
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A frontend web application for the **RentalCar** company, which specializes in car rentals. The app allows users to browse a catalog of cars, filter by parameters, view car details, and book a rental — all with a clean, user-friendly interface.
 
-Currently, two official plugins are available:
+## Project Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+RentalCar is a single-page React application developed with Vite and Redux. It integrates with a ready-made backend API to fetch data about cars available for rent. The app supports advanced filtering, a responsive UI, persistent favorites, and rental form submission.
 
-## Expanding the ESLint configuration
+## 🔧 Tech Stack
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **React** (with Vite)
+- **Redux Toolkit** for state management
+- **React Router** for routing
+- **Axios** for HTTP requests
+- **CSS Modules** for styling
+- **Backend API**: [car-rental-api.goit.global](https://car-rental-api.goit.global/api-docs/)
+
+## Key Features
+
+- **Home Page** with banner and call-to-action
+- **Catalog Page** displaying car cards with:
+- Filtering by brand, rental price, and mileage (server-side)
+- Load More functionality (pagination via backend)
+- Favorite button with localStorage persistence
+- **Car Details Page** with:
+- Full car specifications
+- Booking modal with form validation and success notification
+- **Favorites** persisted in localStorage
+- **404 Page** for unmatched routes
+- **Responsive design** (desktop layout required, adaptive optional)
+- **Clean UI** consistent with Figma mockup
+
+## Installation & Usage
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/oksanacherviachenko/rental-car.git
+   cd rental-car
+   Install dependencies:
+
+   ```
+
+npm install
+Start the development server:
+
+npm run dev
+Build for production:
+
+npm run build
+Deployment
+The project is deployed on Vercel and can be accessed here:
+👉 Live Demo
+
+Author
+Oksana Cherviachenko
+kvintinovna@gmail.com
+LinkedIn - https://www.linkedin.com/in/oksana-cherviachenko
+GitHub - https://github.com/oksanacherviachenko
+
+This project was created as part of a technical assignment and demonstrates best practices in modern React development.

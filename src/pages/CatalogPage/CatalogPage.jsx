@@ -31,7 +31,7 @@ const CatalogPage = () => {
 
   return (
     <div className={styles.catalog}>
-      {/* Сховати заголовок */}
+    
       <h1 className={styles.title} aria-hidden="true">Catalog</h1>
 
       <div className={styles.filterWrapper}>

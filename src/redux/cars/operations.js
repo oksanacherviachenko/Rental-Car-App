@@ -1,9 +1,7 @@
 //src/redux/cars/operations.jsx
-// src/redux/cars/operations.jsx
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../services/api';
 
-// Очищення параметрів перед запитом
 const cleanParams = (params) => {
   const cleaned = {};
   for (const key in params) {
@@ -20,7 +18,6 @@ const cleanParams = (params) => {
   return cleaned;
 };
 
-// Отримання авто з урахуванням фільтрів
 export const fetchCars = createAsyncThunk('cars/fetchAll', async (_, thunkAPI) => {
   try {
     const state = thunkAPI.getState();
@@ -29,7 +26,7 @@ export const fetchCars = createAsyncThunk('cars/fetchAll', async (_, thunkAPI) =
     const rawParams = {
       page,
       limit: 12,
-      ...filters, // rentalPrice вже в filters
+      ...filters, 
     };
 
     const params = cleanParams(rawParams);
@@ -41,7 +38,6 @@ export const fetchCars = createAsyncThunk('cars/fetchAll', async (_, thunkAPI) =
   }
 });
 
-// Деталі авто по ID
 export const fetchCarById = createAsyncThunk('cars/fetchById', async (id, thunkAPI) => {
   try {
     const response = await axios.get(`/cars/${id}`);

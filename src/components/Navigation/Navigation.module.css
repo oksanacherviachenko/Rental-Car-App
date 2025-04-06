@@ -45,18 +45,18 @@
 .link {
   font-size: 16px;
   font-weight: 500;
-  color: var(--main); /* 🔄 основний колір */
+  color: var(--main);
   text-decoration: none;
   transition: color var(--transition-fast);
 }
 
 .link:hover,
 .link:focus {
-  color: var(--button-hover); /* 🔄 зміна кольору при ховері/фокусі */
+  color: var(--button-hover);
 }
 
 .active {
-  color: var(--button-hover); /* 🔄 активний стан */
+  color: var(--button-hover);
 }
 
 .burger {
