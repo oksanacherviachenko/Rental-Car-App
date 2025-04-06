@@ -1,7 +1,9 @@
+//src/App.jsx
 import React, { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Navigation from './components/Navigation/Navigation';
 import Loader from './components/Loader/Loader';
+import styles from './App.module.css'; // ✅ підключаємо модуль стилів
 
 // Сторінки RentalCar
 const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
@@ -13,7 +15,7 @@ function App() {
   return (
     <>
       <Navigation />
-      <div style={{ paddingTop: '60px' }}>
+      <div className={styles.appWrapper}>
         <Suspense fallback={<Loader />}>
           <Routes>
             <Route path="/" element={<HomePage />} />
@@ -28,6 +30,7 @@ function App() {
 }
 
 export default App;
+
 
 
 

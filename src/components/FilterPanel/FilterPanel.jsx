@@ -1,88 +1,138 @@
 // src/components/FilterPanel/FilterPanel.jsx
-
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchBrands } from '../../redux/brands/brandsSlice';
+import { fetchPrices } from '../../redux/prices/pricesSlice';
 import { setFilters, setPage } from '../../redux/cars/carsSlice';
 import { fetchCars } from '../../redux/cars/operations';
 import styles from './FilterPanel.module.css';
+import { formatNumber } from '../../utils/formatNumber';
 
 const FilterPanel = () => {
   const dispatch = useDispatch();
+  const brands = useSelector(state => state.brands.items);
+  const isLoadingBrands = useSelector(state => state.brands.isLoading);
+  const prices = useSelector(state => state.prices.items);
 
   const [brand, setBrand] = useState('');
-  const [price, setPrice] = useState('');
+  const [rentalPrice, setRentalPrice] = useState('');
   const [mileageFrom, setMileageFrom] = useState('');
   const [mileageTo, setMileageTo] = useState('');
+  const [isBrandOpen, setIsBrandOpen] = useState(false);
+  const [isPriceOpen, setIsPriceOpen] = useState(false);
+
+  useEffect(() => {
+    if (brands.length === 0) {
+      dispatch(fetchBrands());
+    }
+    dispatch(fetchPrices());
+  }, [dispatch, brands.length]);
 
   const handleSubmit = e => {
     e.preventDefault();
-
     const filters = {
       brand,
-      price,
-      mileageFrom,
-      mileageTo,
+      rentalPrice,
+      mileageFrom: mileageFrom.replace(/\s/g, ''),
+      mileageTo: mileageTo.replace(/\s/g, '')
     };
-
-    // Оновлюємо фільтри
     dispatch(setFilters(filters));
-
-    // Скидаємо сторінку до 1
     dispatch(setPage(1));
-
-    // Завантажуємо машини з фільтрами з першої сторінки
     dispatch(fetchCars());
+  };
+
+  const handleMileageInput = setter => e => {
+    const rawValue = e.target.value.replace(/\D/g, '');
+    if (!isNaN(rawValue)) setter(rawValue);
   };
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
-      <label>
-        Brand:
-        <select value={brand} onChange={e => setBrand(e.target.value)}>
-          <option value="">All</option>
-          <option value="Buick">Buick</option>
-          <option value="Volvo">Volvo</option>
-          <option value="HUMMER">HUMMER</option>
-          <option value="Subaru">Subaru</option>
-          <option value="Mitsubishi">Mitsubishi</option>
-          <option value="Nissan">Nissan</option>
-        </select>
-      </label>
+      <div className={styles.row}> {/* 👈 new wrapper for horizontal alignment */}
+        <label className={styles.label}>
+          Car brand
+          <div className={styles.selectWrapper}>
+            <select
+              className={styles.select}
+              value={brand}
+              onChange={e => setBrand(e.target.value)}
+              onFocus={() => setIsBrandOpen(true)}
+              onBlur={() => setIsBrandOpen(false)}
+              disabled={isLoadingBrands}
+            >
+              <option value="">Choose a brand</option>
+              {brands.map((make, index) => (
+                <option key={index} value={make}>{make}</option>
+              ))}
+            </select>
+            <svg className={styles.icon}>
+              <use href={`/icons.svg#${isBrandOpen ? 'icon-done-active' : 'icon-done-default'}`} />
+            </svg>
+          </div>
+        </label>
 
-      <label>
-        Price:
-        <select value={price} onChange={e => setPrice(e.target.value)}>
-          <option value="">Any</option>
-          <option value="30">Up to $30</option>
-          <option value="50">Up to $50</option>
-          <option value="70">Up to $70</option>
-        </select>
-      </label>
+        <label className={styles.label}>
+          Price/ 1 hour
+          <div className={styles.selectWrapper}>
+            <select
+              className={styles.select}
+              value={rentalPrice}
+              onChange={e => setRentalPrice(e.target.value)}
+              onFocus={() => setIsPriceOpen(true)}
+              onBlur={() => setIsPriceOpen(false)}
+            >
+              <option value="">Choose a price</option>
+              {prices.map((price, index) => (
+                <option key={index} value={price}>${price}</option>
+              ))}
+            </select>
+            <svg className={styles.icon}>
+              <use href={`/icons.svg#${isPriceOpen ? 'icon-done-active' : 'icon-done-default'}`} />
+            </svg>
+          </div>
+        </label>
 
-      <label>
-        Mileage from:
-        <input
-          type="number"
-          value={mileageFrom}
-          onChange={e => setMileageFrom(e.target.value)}
-          placeholder="From"
-        />
-      </label>
+        <label className={styles.label}>
+          Сar mileage / km
+          <div className={styles.mileageWrapper}>
+            <input
+              className={styles.input}
+              type="text"
+              value={formatNumber(mileageFrom)}
+              onChange={handleMileageInput(setMileageFrom)}
+              placeholder="From"
+            />
+            <span className={styles.separator}>|</span>
+            <input
+              className={styles.input}
+              type="text"
+              value={formatNumber(mileageTo)}
+              onChange={handleMileageInput(setMileageTo)}
+              placeholder="To"
+            />
+          </div>
+        </label>
 
-      <label>
-        Mileage to:
-        <input
-          type="number"
-          value={mileageTo}
-          onChange={e => setMileageTo(e.target.value)}
-          placeholder="To"
-        />
-      </label>
-
-      <button type="submit">Apply Filters</button>
+        <div className={styles.buttonWrapper}>
+          <button type="submit" className={styles.button}>Search</button>
+        </div>
+      </div>
     </form>
   );
 };
 
 export default FilterPanel;
+
+
+
+
+
+
+
+
+
+
+
+
+
 
