@@ -1,6 +1,8 @@
 //src/App.jsx
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { loadFavoritesFromStorage } from './redux/cars/carsSlice';
 import Navigation from './components/Navigation/Navigation';
 import Loader from './components/Loader/Loader';
 import styles from './App.module.css';
@@ -11,6 +13,15 @@ const CarDetailsPage = lazy(() => import('./pages/CarDetailsPage/CarDetailsPage'
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage/NotFoundPage'));
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const stored = localStorage.getItem('favorites');
+    if (stored) {
+      dispatch(loadFavoritesFromStorage(JSON.parse(stored)));
+    }
+  }, [dispatch]);
+
   return (
     <>
       <Navigation />
@@ -29,7 +40,6 @@ function App() {
 }
 
 export default App;
-
 
 
 

@@ -1,6 +1,7 @@
 // src/components/CarCard/CarCard.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
+import FavoriteButton from '../FavoriteButton/FavoriteButton';
 import styles from './CarCard.module.css';
 import { formatNumber } from '../../utils/formatNumber';
 
@@ -24,6 +25,7 @@ const CarCard = ({ car }) => {
   return (
     <li className={styles.card}>
       <div className={styles.imageWrapper}>
+        <FavoriteButton carId={id} />
         <img src={img} alt={`${brand} ${model}`} className={styles.image} />
       </div>
 
