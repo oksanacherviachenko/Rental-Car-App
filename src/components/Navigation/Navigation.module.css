@@ -1,8 +1,8 @@
+/*src/components/Navigation/Navigation.module.css*/
 .header {
-  background-color: #ffffff;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 10px 0;
+  background-color: #f2f4f7;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 12px 0;
   width: 100%;
   position: fixed;
   top: 0;
@@ -10,29 +10,96 @@
   z-index: 1000;
 }
 
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  padding: 0 20px;
+  margin: 0 auto;
+}
+
+.logo {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.logoDark {
+  color: var(--main);
+}
+
+.logoBlue {
+  color: var(--button);
+}
+
 .nav {
   display: flex;
-  justify-content: center;
   gap: 30px;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
 }
 
 .link {
-  text-decoration: none;
-  color: black;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
-  transition: color 0.3s ease;
+  color: var(--main);
+  text-decoration: none;
+  transition: color var(--transition-fast);
 }
 
 .link:hover,
 .link:focus {
-  color: darkred;
+  color: var(--button-hover);
 }
 
 .active {
-  color: darkred;
-  font-weight: bold;
+  color: var(--button-hover);
+}
+
+.burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.burger span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background-color: var(--main);
+  transition: transform 0.3s ease;
+}
+
+.mobileNav {
+  display: none;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  right: 0;
+  background-color: var(--white);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  flex-direction: column;
+  gap: 16px;
+  padding: 1rem;
+  z-index: 999;
+}
+
+.showNav {
+  display: flex;
+}
+
+@media (max-width: 768px) {
+  .nav {
+    display: none;
+  }
+
+  .burger {
+    display: flex;
+  }
 }
