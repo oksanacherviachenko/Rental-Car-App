@@ -1,28 +1,52 @@
 /* src/pages/CatalogPage/CatalogPage.module.css */
 
 .catalog {
-  padding: 2rem;
+  padding: 2rem 1rem;
   max-width: 1200px;
   margin: 0 auto;
 }
 
 .title {
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
-  text-align: center;
+  display: none; /* приховуємо заголовок візуально */
+}
+
+.filterWrapper {
+  width: 100vw;
+  margin-left: calc(-1 * ((100vw - 100%) / 2));
+  margin-bottom: 2rem;
 }
 
 .carList {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
   padding: 0;
   margin: 0;
+  list-style: none;
 }
 
 .endMessage {
   text-align: center;
   margin-top: 2rem;
   font-size: 1rem;
-  color: #777;
+  color: var(--gray);
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .carList {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .carList {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .filterWrapper {
+    margin-left: 0;
+    width: 100%;
+  }
 }

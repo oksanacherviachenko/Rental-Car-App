@@ -15,28 +15,28 @@ import styles from './CatalogPage.module.css';
 const CatalogPage = () => {
   const dispatch = useDispatch();
 
-  // Витягуємо дані зі стану Redux
   const cars = useSelector(state => state.cars.items);
   const isLoading = useSelector(state => state.cars.isLoading);
   const error = useSelector(state => state.cars.error);
   const page = useSelector(state => state.cars.page);
-  const hasMore = useSelector(state => state.cars.hasMore); // ➕ нове
+  const hasMore = useSelector(state => state.cars.hasMore);
 
-  // Завантаження авто при відкритті сторінки або зміні сторінки
   useEffect(() => {
     dispatch(fetchCars());
   }, [dispatch, page]);
 
-  // Обробник кліку по Load More
   const handleLoadMore = () => {
     dispatch(setPage(page + 1));
   };
 
   return (
     <div className={styles.catalog}>
-      <h1 className={styles.title}>Catalog</h1>
+      {/* Сховати заголовок */}
+      <h1 className={styles.title} aria-hidden="true">Catalog</h1>
 
-      <FilterPanel />
+      <div className={styles.filterWrapper}>
+        <FilterPanel />
+      </div>
 
       {isLoading && <Loader />}
       {error && <ErrorMessage message={error} />}
