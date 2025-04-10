@@ -2,6 +2,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../services/api';
 
+// Очищення параметрів перед запитом
 const cleanParams = (params) => {
   const cleaned = {};
   for (const key in params) {
@@ -18,6 +19,7 @@ const cleanParams = (params) => {
   return cleaned;
 };
 
+// Отримання авто з урахуванням фільтрів
 export const fetchCars = createAsyncThunk('cars/fetchAll', async (_, thunkAPI) => {
   try {
     const state = thunkAPI.getState();
@@ -26,8 +28,17 @@ export const fetchCars = createAsyncThunk('cars/fetchAll', async (_, thunkAPI) =
     const rawParams = {
       page,
       limit: 12,
-      ...filters, 
     };
+
+    if (filters.brand) rawParams.brand = filters.brand;
+    if (filters.rentalPrice) rawParams.rentalPrice = filters.rentalPrice;
+    if (filters.mileageFrom && !isNaN(Number(filters.mileageFrom))) {
+  rawParams['mileage[$gte]'] = Number(filters.mileageFrom);
+}
+
+if (filters.mileageTo && !isNaN(Number(filters.mileageTo))) {
+  rawParams['mileage[$lte]'] = Number(filters.mileageTo);
+}
 
     const params = cleanParams(rawParams);
     const response = await axios.get('/cars', { params });
@@ -38,6 +49,7 @@ export const fetchCars = createAsyncThunk('cars/fetchAll', async (_, thunkAPI) =
   }
 });
 
+// Отримання деталей авто за ID
 export const fetchCarById = createAsyncThunk('cars/fetchById', async (id, thunkAPI) => {
   try {
     const response = await axios.get(`/cars/${id}`);
