@@ -86,12 +86,28 @@ select:-moz-focusring {
 .mileageWrapper {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   background: var(--inputs);
   border-radius: 14px;
-  padding: 14px;
-  width: 224px;
+  padding: 0 14px;
   height: 48px;
+  min-width: 250px;
+  max-width: 300px;
+  flex-wrap: nowrap;
+}
+
+.mileageInputBox {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 100px;
+  gap: 4px;
+}
+
+.mileageLabel {
+  font: 500 18px / 125% var(--font-family);
+  color: var(--main);
+  white-space: nowrap;
 }
 
 .input {
@@ -99,7 +115,10 @@ select:-moz-focusring {
   background: transparent;
   font: 500 18px / 125% var(--font-family);
   color: var(--main);
-  width: 50%;
+  min-width: 60px;
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
   outline: none;
 }
 
