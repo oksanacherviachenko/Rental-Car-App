@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBrands } from '../../redux/brands/brandsSlice';
-import { fetchPrices } from '../../redux/prices/pricesSlice';
 import { setFilters, setPage } from '../../redux/cars/carsSlice';
 import { setMileage } from '../../redux/mileage/mileageSlice';
 import { fetchCars } from '../../redux/cars/operations';
@@ -26,7 +25,6 @@ const FilterPanel = () => {
     if (brands.length === 0) {
       dispatch(fetchBrands());
     }
-    dispatch(fetchPrices());
   }, [dispatch, brands.length]);
 
   const handleMileageInput = setter => e => {
@@ -140,6 +138,7 @@ const FilterPanel = () => {
 };
 
 export default FilterPanel;
+
 
 
 
