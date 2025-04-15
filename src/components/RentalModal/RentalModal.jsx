@@ -1,14 +1,17 @@
 // src/components/RentalModal/RentalModal.jsx
 import React, { useState } from 'react';
 import styles from './RentalModal.module.css';
+import { getTodayDate, validateBookingForm } from '../../utils/validateBooking';
 
 const RentalModal = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    date: '',
+    dateFrom: '',
+    dateTo: '',
     comment: '',
   });
+
   const [isSuccess, setIsSuccess] = useState(false);
 
   const handleChange = e => {
@@ -21,14 +24,21 @@ const RentalModal = () => {
   const handleSubmit = e => {
     e.preventDefault();
 
-    if (!formData.name || !formData.email || !formData.date) {
-      alert('Please fill all required fields (*)');
+    const error = validateBookingForm(formData);
+    if (error) {
+      alert(error);
       return;
     }
 
     setIsSuccess(true);
     setTimeout(() => {
-      setFormData({ name: '', email: '', date: '', comment: '' });
+      setFormData({
+        name: '',
+        email: '',
+        dateFrom: '',
+        dateTo: '',
+        comment: '',
+      });
       setIsSuccess(false);
     }, 2000);
   };
@@ -39,7 +49,7 @@ const RentalModal = () => {
       <p className={styles.formText}>Stay connected! We are always ready to help you.</p>
 
       {isSuccess ? (
-        <p className={styles.success}> Your booking was successful!</p>
+        <p className={styles.success}>Your booking was successful!</p>
       ) : (
         <form onSubmit={handleSubmit} className={styles.form}>
           <input
@@ -60,9 +70,19 @@ const RentalModal = () => {
           />
           <input
             type="date"
-            name="date"
-            placeholder="Booking date*"
-            value={formData.date}
+            name="dateFrom"
+            placeholder="Start date*"
+            min={getTodayDate()}
+            value={formData.dateFrom}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="date"
+            name="dateTo"
+            placeholder="End date*"
+            min={formData.dateFrom || getTodayDate()}
+            value={formData.dateTo}
             onChange={handleChange}
             required
           />
@@ -80,4 +100,5 @@ const RentalModal = () => {
 };
 
 export default RentalModal;
+
 
