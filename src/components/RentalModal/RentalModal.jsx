@@ -1,18 +1,20 @@
 // src/components/RentalModal/RentalModal.jsx
 import React, { useState } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import styles from './RentalModal.module.css';
-import { getTodayDate, validateBookingForm } from '../../utils/validateBooking';
+import { validateBookingForm } from '../../utils/validateBooking';
 
 const RentalModal = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    dateFrom: '',
-    dateTo: '',
+    dateRange: [null, null],
     comment: '',
   });
 
   const [isSuccess, setIsSuccess] = useState(false);
+  const [startDate, endDate] = formData.dateRange;
 
   const handleChange = e => {
     setFormData(prev => ({
@@ -21,10 +23,23 @@ const RentalModal = () => {
     }));
   };
 
+  const handleDateChange = range => {
+    setFormData(prev => ({
+      ...prev,
+      dateRange: range,
+    }));
+  };
+
   const handleSubmit = e => {
     e.preventDefault();
 
-    const error = validateBookingForm(formData);
+    const error = validateBookingForm({
+      name: formData.name,
+      email: formData.email,
+      dateFrom: startDate,
+      dateTo: endDate,
+    });
+
     if (error) {
       alert(error);
       return;
@@ -35,8 +50,7 @@ const RentalModal = () => {
       setFormData({
         name: '',
         email: '',
-        dateFrom: '',
-        dateTo: '',
+        dateRange: [null, null],
         comment: '',
       });
       setIsSuccess(false);
@@ -68,24 +82,19 @@ const RentalModal = () => {
             onChange={handleChange}
             required
           />
-          <input
-            type="date"
-            name="dateFrom"
-            placeholder="Start date*"
-            min={getTodayDate()}
-            value={formData.dateFrom}
-            onChange={handleChange}
+
+          <DatePicker
+            selected={startDate}
+            onChange={handleDateChange}
+            startDate={startDate}
+            endDate={endDate}
+            selectsRange
+            placeholderText="Booking date*"
+            minDate={new Date()}
+            className={styles.datepicker}
             required
           />
-          <input
-            type="date"
-            name="dateTo"
-            placeholder="End date*"
-            min={formData.dateFrom || getTodayDate()}
-            value={formData.dateTo}
-            onChange={handleChange}
-            required
-          />
+
           <textarea
             name="comment"
             placeholder="Comment"
@@ -100,5 +109,6 @@ const RentalModal = () => {
 };
 
 export default RentalModal;
+
 
 
