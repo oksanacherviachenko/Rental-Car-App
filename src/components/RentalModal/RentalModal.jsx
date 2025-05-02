@@ -1,9 +1,12 @@
 // src/components/RentalModal/RentalModal.jsx
 import React, { useState } from 'react';
-import DatePicker from 'react-datepicker';
+import DatePicker, { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import enGB from 'date-fns/locale/en-GB';
 import styles from './RentalModal.module.css';
 import { validateBookingForm } from '../../utils/validateBooking';
+
+registerLocale('en-GB', enGB);
 
 const RentalModal = () => {
   const [formData, setFormData] = useState({
@@ -93,6 +96,7 @@ const RentalModal = () => {
             minDate={new Date()}
             className={styles.datepicker}
             required
+            locale="en-GB"
           />
 
           <textarea
@@ -109,6 +113,8 @@ const RentalModal = () => {
 };
 
 export default RentalModal;
+
+
 
 
 
